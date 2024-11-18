@@ -9,14 +9,38 @@ import {
 import { signInFormControls, signUpFormControls } from "@/config";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GraduationCap } from "lucide-react";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "@/context/auth-context";
 
 const AuthPage = () => {
   const [activeTab, setActiveTab] = useState("signin");
+  const {
+    signInFormData,
+    setSignInFormData,
+    signUpFormData,
+    setSignUpFormData,
+  } = useContext(AuthContext);
 
   function handleTabChange(value) {
     setActiveTab(value);
+  }
+
+  function checkIfSignInFormIsValid() {
+    return (
+      signInFormData &&
+      signInFormData.userEmail !== "" &&
+      signInFormData.password !== ""
+    );
+  }
+
+  function checkIfSignUpFormIsValid() {
+    return (
+      signUpFormData &&
+      signUpFormData.userName !== "" &&
+      signUpFormData.userEmail !== "" &&
+      signUpFormData.password !== ""
+    );
   }
 
   return (
@@ -53,6 +77,9 @@ const AuthPage = () => {
                 <CommonForm
                   formControls={signInFormControls}
                   buttonText={"Sign In"}
+                  formData={signInFormData}
+                  setFormData={setSignInFormData}
+                  isButtonDisabled={!checkIfSignInFormIsValid()}
                 />
               </CardContent>
             </Card>
@@ -70,7 +97,10 @@ const AuthPage = () => {
               <CardContent className="space-y-2">
                 <CommonForm
                   formControls={signUpFormControls}
-                  buttonText={"Sign In"}
+                  buttonText={"Sign Up"}
+                  formData={signUpFormData}
+                  setFormData={setSignUpFormData}
+                  isButtonDisabled={!checkIfSignUpFormIsValid()}
                 />
               </CardContent>
             </Card>

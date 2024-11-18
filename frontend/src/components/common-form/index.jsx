@@ -7,6 +7,7 @@ function CommonForm({
   formControls = [],
   formData,
   setFormData,
+  isButtonDisabled = false,
 }) {
   return (
     <form onSubmit={handleSubmit}>
@@ -15,7 +16,7 @@ function CommonForm({
         formData={formData}
         setFormData={setFormData}
       />
-      <Button className="mt-5 w-full" type="submit">
+      <Button disabled={isButtonDisabled} className="mt-5 w-full" type="submit">
         {" "}
         {buttonText || "Submit"}{" "}
       </Button>
