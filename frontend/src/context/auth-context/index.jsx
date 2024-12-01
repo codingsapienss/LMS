@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { initialSignInFormData, initialSignUpFormData } from "@/config";
-import { loginService, registerService } from "@/services";
-import { createContext, useState } from "react";
+import { checkAuth, loginService, registerService } from "@/services";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext(null);
 
@@ -31,8 +31,35 @@ export default function AuthProvider({ children }) {
         authenticate: true,
         user: data.data.user,
       });
+    } else {
+      setAuth({
+        authenticate: false,
+        user: null,
+      });
     }
   }
+
+  //check auth user
+
+  async function checkAuthUser() {
+    const data = await checkAuth();
+
+    if (data.success) {
+      setAuth({
+        authenticate: true,
+        user: data.data.user,
+      });
+    } else {
+      setAuth({
+        authenticate: false,
+        user: null,
+      });
+    }
+  }
+
+  useEffect(() => {
+    checkAuthUser();
+  }, []);
 
   return (
     <AuthContext.Provider

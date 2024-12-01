@@ -10,7 +10,7 @@ router.get("/check-auth", authenticate, (req, res) => {
   const user = req.user;
 
   res.status(200).json({
-    success: ture,
+    success: true,
     message: "Authenticated User",
     data: {
       user: user,
