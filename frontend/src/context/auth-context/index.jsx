@@ -8,6 +8,7 @@ export const AuthContext = createContext(null);
 export default function AuthProvider({ children }) {
   const [signInFormData, setSignInFormData] = useState(initialSignInFormData);
   const [signUpFormData, setSignUpFormData] = useState(initialSignUpFormData);
+
   const [auth, setAuth] = useState({
     authenticate: false,
     user: null,
@@ -64,6 +65,7 @@ export default function AuthProvider({ children }) {
   return (
     <AuthContext.Provider
       value={{
+        auth,
         signInFormData,
         setSignInFormData,
         signUpFormData,
